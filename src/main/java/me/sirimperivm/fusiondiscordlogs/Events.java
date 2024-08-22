@@ -27,7 +27,7 @@ public class Events implements Listener {
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage();
-        plugin.sendToDiscord(event.getPlayer().getName() + " issued command /" + command);
+        plugin.sendToDiscord(event.getPlayer().getName() + " issued command " + command);
     }
 
     @EventHandler
@@ -40,13 +40,13 @@ public class Events implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        plugin.sendToDiscord("➕ " + p.getName());
+        plugin.sendToDiscord("[+] " + p.getName());
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        plugin.sendToDiscord("➖ " + p.getName());
+        plugin.sendToDiscord("[-] " + p.getName());
     }
 
 }
