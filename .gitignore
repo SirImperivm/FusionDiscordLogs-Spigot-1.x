@@ -1,4 +1,8 @@
-/target/
+/target/classes/
+/target/generated-sources/
+/target/maven-archiver/
+/target/maven-status/
+/target/original-FusionDiscordLogs-1.0.jar
 /.idea/
 /src/main/resources
 /pom.xml
