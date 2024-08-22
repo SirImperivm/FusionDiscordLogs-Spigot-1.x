@@ -21,32 +21,44 @@ public class Events implements Listener {
     @EventHandler
     public void onServerCommand(ServerCommandEvent event) {
         String command = event.getCommand();
-        plugin.sendToDiscord("Server issued command /" + command);
+        plugin.sendToDiscord(plugin.getDiscordMessage("console-command")
+                .replace("{command-string}", command)
+        );
     }
 
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage();
-        plugin.sendToDiscord(event.getPlayer().getName() + " issued command " + command);
+        plugin.sendToDiscord(plugin.getDiscordMessage("player-command")
+                .replace("{player}", event.getPlayer().getName())
+                .replace("{command-string}", command)
+        );
     }
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String message = e.getMessage();
-        plugin.sendToDiscord(p.getName() + " » " + message);
+        plugin.sendToDiscord(plugin.getDiscordMessage("chat")
+                .replace("{player}", p.getName())
+                .replace("{message}", message)
+        );
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        plugin.sendToDiscord("[+] " + p.getName());
+        plugin.sendToDiscord(plugin.getDiscordMessage("join")
+                .replace("{player}", p.getName())
+        );
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        plugin.sendToDiscord("[-] " + p.getName());
+        plugin.sendToDiscord(plugin.getDiscordMessage("quit")
+                .replace("{player}", p.getName())
+        );
     }
 
 }

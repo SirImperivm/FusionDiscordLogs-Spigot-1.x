@@ -35,18 +35,18 @@ public final class FusionDiscordLogs extends JavaPlugin{
 
         getServer().getPluginManager().registerEvents(new Events(plugin), this);
 
-        sendToDiscord("Il server è stato avviato.");
+        sendToDiscord(getDiscordMessage("server-start"));
     }
 
     @Override
     public void onDisable() {
         if (canContinue) {
-            sendToDiscord("Il server è stato fermato.");
+            sendToDiscord(getDiscordMessage("server-stop"));
         }
     }
 
     private String getDate() {
-        String defaulTimeFormat = getConfig().getString("date-format", "dd/MM/yyyy-HH:mm:ss");
+        String defaulTimeFormat = getConfig().getString("date-format", "[dd/MM/yyyy HH:mm:ss]");
         String defaulTimeZone = getConfig().getString("date-timezone", "Europe/Rome");
         Date now = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(defaulTimeFormat);
@@ -54,8 +54,12 @@ public final class FusionDiscordLogs extends JavaPlugin{
         return simpleDateFormat.format(now);
     }
 
+    public String getDiscordMessage(String section) {
+        return plugin.getConfig().getString("discord-messages." + section);
+    }
+
     public void sendToDiscord(String message) {
-        message = "[" + getDate() + "] " + message;
+        message = getDate() + message;
         try {
             URL url = new URL(webhookUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
