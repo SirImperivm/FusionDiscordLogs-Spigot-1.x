@@ -76,7 +76,7 @@ public final class FusionDiscordLogs extends JavaPlugin{
             }
 
             int responseCode = connection.getResponseCode();
-            if (responseCode != HttpURLConnection.HTTP_OK) {
+            if (responseCode < 200 || responseCode >= 400) {
                 getLogger().warning("Errore durante l'invio al webhook: " + responseCode);
             }
 
