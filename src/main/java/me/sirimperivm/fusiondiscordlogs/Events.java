@@ -9,6 +9,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 
+import java.util.List;
+
 @SuppressWarnings("all")
 public class Events implements Listener {
 
@@ -21,6 +23,9 @@ public class Events implements Listener {
     @EventHandler
     public void onServerCommand(ServerCommandEvent event) {
         String command = event.getCommand();
+        List<String> blacklistedCommands = plugin.getConfig().getStringList("log-settings.blacklisted-commands");
+        if (blacklistedCommands.contains(command))
+            return;
         plugin.sendToDiscord(plugin.getDiscordMessage("console-command")
                 .replace("{command-string}", command)
         );
@@ -29,6 +34,9 @@ public class Events implements Listener {
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage();
+        List<String> blacklistedCommands = plugin.getConfig().getStringList("log-settings.blacklisted-commands");
+        if (blacklistedCommands.contains(command))
+            return;
         plugin.sendToDiscord(plugin.getDiscordMessage("player-command")
                 .replace("{player}", event.getPlayer().getName())
                 .replace("{command-string}", command)
